@@ -1,0 +1,17 @@
+AUTH_tk6354bffc971741bb825b2d5fbb135aeb
+AUTH_tk6354bffc971741bb825b2d5fbb135aeb
+http://127.0.0.1:8080/v1/AUTH_test
+curl -v -H 'X-Auth-Token: AUTH_tkd750706a77a544df9773a59793ae88f2' http://127.0.0.1:8080/v1/AUTH_test
+
+curl -k -X PUT -T ./test.data -H 'Content-Type: text/plain' -H 'X-Auth-Token: AUTH_tk418c313cac464fc685afb253e35ce7f7' http://127.0.0.1:8080/v1/AUTH_test/images/test.data
+
+curl -k -X HEAD -D -  -H 'X-Auth-Token: AUTH_tk4ff9bbba3b964898a7ab639556c9f0db' http://127.0.0.1:8080/v1/AUTH_test
+
+curl -k -X GET -H 'X-Auth-Token: AUTH_tk037923bf36bd4ffc85434528074a9792' http://127.0.0.1:8080/v1/AUTH_test/images
+
+curl -k -X GET -H 'X-Auth-Token: AUTH_tk44ae56cd568a4350a49e837d4ba3300c' http://127.0.0.1:8080/v1/AUTH_test/images
+
+
+curl -k -X PUT -T ./test.data -H 'Content-Type: text/plain' -H 'X-Auth-Token: AUTH_tkf751561024564675ad04b1f7be4388e4' http://127.0.0.1:8080/v1/AUTH_test/images/test.data
+
+curl -i -H "X-Auth-User: test:tester3" -H "X-Auth-Key: testing3" http://127.0.0.1/v1/AUTH_test
