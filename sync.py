@@ -219,7 +219,7 @@ def getobjects(DicttobeSynced):
 			value=DicttobeSynced[key]
 			newurl=sys.argv[3]+'/'+value+'/'+file_name
 			print newurl
-			print UncorrectPathtoCorrectpath()+'/'+sys.argv[1]+'/'+value+'/'+file_name
+		#	print UncorrectPathtoCorrectpath()+'/'+sys.argv[1]+'/'+value+'/'+file_name
 			xmlfile = open(os.getcwd()+'/'+sys.argv[1]+'/'+value+'/'+file_name, 'wb+')
 			# r = requests.put(url, data=xmlfile, headers=headers, auth=HTTPDigestAuth("*", "*")
 			headers={"X-Auth-Token":tester.xauthtoken}
