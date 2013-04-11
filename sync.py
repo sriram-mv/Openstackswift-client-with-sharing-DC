@@ -326,8 +326,8 @@ def Start():
 	print "At Client objects in container2 : ",ClientFiles.values()[1]
 	print "Length at Server: ",len(ServerFiles.values()[0])
 	print "Length at Client: ",len(ClientFiles.values()[0])
-	print "Motha Length of Values at Server",len(ServerFiles.values())
-	print "Motha Length of Values at Client",len(ClientFiles.values())
+	print "Total Length of Values at Server",len(ServerFiles.values())
+	print "Total Length of Values at Client",len(ClientFiles.values())
 	FileSyncatClient(ServerFiles,ClientFiles)
 	FileSyncatServer(ServerFiles,ClientFiles)
 
