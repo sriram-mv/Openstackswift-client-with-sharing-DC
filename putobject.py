@@ -36,7 +36,7 @@ def main():
 		#print r.headers
 		# print len(r.content)
 		file_name = url12.split('/')[-1]
-		xmlfile = open(file_name, 'wb+')
+		xmlfile = open(file_name, 'rb')
 		# r = requests.put(url, data=xmlfile, headers=headers, auth=HTTPDigestAuth("*", "*")
 		headers={"X-Auth-Token":tester.xauthtoken}
 		r=requests.put(url12,headers=headers,data=xmlfile)

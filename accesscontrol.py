@@ -26,7 +26,7 @@ def main():
 		print "Wrong username or password"
 		exit(1)
 	if auth in test:
-		headers={"X-Container-Read":sys.argv[4],"X-Auth-Token":tester.xauthtoken}
+		headers={"X-Container-Read":sys.argv[4],"X-Container-Write":sys.argv[4],"X-Auth-Token":tester.xauthtoken}
 		list1=sys.argv[1].split(":")
 		list2=sys.argv[4].split(":")
 		if list2[0]==list1[0]:

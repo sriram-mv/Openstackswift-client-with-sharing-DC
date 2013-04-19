@@ -2,6 +2,7 @@ import io,sys,os
 from collections import defaultdict
 import requests
 from copy import deepcopy
+from testofheaders import test
 def ensure_dir(f):
 	if not os.path.exists(f):
 		try:
@@ -50,7 +51,7 @@ def StatusatServer():
 	# head={"X-Storage-User":"test:tester","X-Storage-Pass":"testing"}
 	head={"X-Storage-User":sys.argv[1],"X-Storage-Pass":sys.argv[2]}
 	r=requests.get(url,headers=head)
-	url12=sys.argv[3]
+	url12=r.headers['x-storage-url']
 	auth="AUTH"
 	tester=User(r.headers.get('x-auth-token'),r.headers.get('x-storage-token'))
 	# print tester.xauthtoken,tester.xstoragetoken
@@ -69,10 +70,9 @@ def StatusatServer():
 		# print Containerlist
 		size=len(Containerlist)-1
 		ContainerIter=iter(Containerlist)
-		# while size>0:
-		# 	ensure_dir(os.getcwd()+'/'+sys.argv[1]+'/'+ContainerIter.next()+'/')
-
-		# 	size=size-1
+		while size>0:
+			ensure_dir(os.getcwd()+'/'+sys.argv[1]+'/'+ContainerIter.next()+'/')
+			size=size-1
 		Containersize=len(Containerlist)-1
 		ContainerIter=iter(Containerlist)
 		Objectsize=0
@@ -161,7 +161,7 @@ def putobjects(DicttobeSynced):
 	# head={"X-Storage-User":"test:tester","X-Storage-Pass":"testing"}
 	head={"X-Storage-User":sys.argv[1],"X-Storage-Pass":sys.argv[2]}
 	r=requests.get(url,headers=head)
-	url12=sys.argv[3]
+	url12=r.headers['x-storage-url']
 	auth="AUTH"
 	# print r.headers
 	tester=User(r.headers.get('x-auth-token'),r.headers.get('x-storage-token'))
@@ -181,9 +181,9 @@ def putobjects(DicttobeSynced):
 			# print key," ",DicttobeSynced[key]
 			file_name = key
 			value=DicttobeSynced[key]
-			newurl=sys.argv[3]+'/'+value+'/'+file_name
+			newurl=url12+'/'+value+'/'+file_name
 			print newurl
-			print UncorrectPathtoCorrectpath()+'/'+sys.argv[1]+'/'+value+'/'+file_name
+			# print UncorrectPathtoCorrectpath()+'/'+sys.argv[1]+'/'+value+'/'+file_name
 			xmlfile = open(os.getcwd()+'/'+sys.argv[1]+'/'+value+'/'+file_name, 'rb+')
 			# r = requests.put(url, data=xmlfile, headers=headers, auth=HTTPDigestAuth("*", "*")
 			headers={"X-Auth-Token":tester.xauthtoken}
@@ -201,7 +201,7 @@ def getobjects(DicttobeSynced):
 	# head={"X-Storage-User":"test:tester","X-Storage-Pass":"testing"}
 	head={"X-Storage-User":sys.argv[1],"X-Storage-Pass":sys.argv[2]}
 	r=requests.get(url,headers=head)
-	url12=sys.argv[3]
+	url12=r.headers['x-storage-url']
 	auth="AUTH"
 	# print r.headers
 	tester=User(r.headers.get('x-auth-token'),r.headers.get('x-storage-token'))
@@ -217,15 +217,18 @@ def getobjects(DicttobeSynced):
 		# print key," ",DicttobeSynced[key]
 			file_name = key
 			value=DicttobeSynced[key]
-			newurl=sys.argv[3]+'/'+value+'/'+file_name
+			newurl=url12+'/'+value+'/'+file_name
 			print newurl
 		#	print UncorrectPathtoCorrectpath()+'/'+sys.argv[1]+'/'+value+'/'+file_name
-			xmlfile = open(os.getcwd()+'/'+sys.argv[1]+'/'+value+'/'+file_name, 'wb+')
+			if(os.path.exists(os.getcwd()+'/'+sys.argv[1]+'/'+value+'/'+file_name)):
+				pass
+			else:
+				xmlfile = open(os.getcwd()+'/'+sys.argv[1]+'/'+value+'/'+file_name, 'wb+')
 			# r = requests.put(url, data=xmlfile, headers=headers, auth=HTTPDigestAuth("*", "*")
-			headers={"X-Auth-Token":tester.xauthtoken}
-			r=requests.get(newurl,headers=headers)
-			xmlfile.write(r.content)
-			xmlfile.close()
+				headers={"X-Auth-Token":tester.xauthtoken}
+				r=requests.get(newurl,headers=headers)
+				xmlfile.write(r.content)
+				xmlfile.close()
 		print "Downloaded!"
 	else:
 		print "Error Occured"
@@ -316,21 +319,21 @@ def Start():
 	FileSync=list()
 	ServerFiles=StatusatServer()
 	ClientFiles=StatusatClient()
-	print "At Server container1 name: ",ServerFiles.keys()[0]
-	print "At Server objects in container1: ",ServerFiles.values()[0]
-	print "At Server container2 name: ",ServerFiles.keys()[1]
-	print "At Server objects in container2 : ",ServerFiles.values()[1]
-	print "At Client container1 name: ",ClientFiles.keys()[0]
-	print "At Client objects in container1: ",ClientFiles.values()[0]	
-	print "At Client container2 name: ",ClientFiles.keys()[1]
-	print "At Client objects in container2 : ",ClientFiles.values()[1]
-	print "Length at Server: ",len(ServerFiles.values()[0])
-	print "Length at Client: ",len(ClientFiles.values()[0])
-	print "Total Length of Values at Server",len(ServerFiles.values())
-	print "Total Length of Values at Client",len(ClientFiles.values())
+	# print "At Server container1 name: ",ServerFiles.keys()[0]
+	# print "At Server objects in container1: ",ServerFiles.values()[0]
+	# print "At Server container2 name: ",ServerFiles.keys()[1]
+	# print "At Server objects in container2 : ",ServerFiles.values()[1]
+	# print "At Client container1 name: ",ClientFiles.keys()[0]
+	# print "At Client objects in container1: ",ClientFiles.values()[0]	
+	# print "At Client container2 name: ",ClientFiles.keys()[1]
+	# print "At Client objects in container2 : ",ClientFiles.values()[1]
+	# print "Length at Server: ",len(ServerFiles.values()[0])
+	# print "Length at Client: ",len(ClientFiles.values()[0])
+	# print "Total Length of Values at Server",len(ServerFiles.values())
+	# print "Total Length of Values at Client",len(ClientFiles.values())
 	FileSyncatClient(ServerFiles,ClientFiles)
 	FileSyncatServer(ServerFiles,ClientFiles)
-
+	test()
 
 
 

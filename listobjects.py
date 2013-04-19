@@ -25,7 +25,7 @@ def main():
 	# head={"X-Storage-User":"test:tester","X-Storage-Pass":"testing"}
 	head={"X-Storage-User":sys.argv[1],"X-Storage-Pass":sys.argv[2]}
 	r=requests.get(url,headers=head)
-	url12=sys.argv[3]
+	url12=r.headers['x-storage-url']
 	auth="AUTH"
 	tester=User(r.headers.get('x-auth-token'),r.headers.get('x-storage-token'))
 	# print tester.xauthtoken,tester.xstoragetoken
