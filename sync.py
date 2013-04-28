@@ -22,8 +22,8 @@ class User():
 #         # Give it the same attributes (references)
 #         other.__dict__ = self.__dict__.copy()
 #         # Create a copy of d dict so other can have its own
-#         other.d = self.d.copy()
-#         return other
+        # other.d = self.d.copy()
+        # return other
 def StatusatClient():
 	Container = defaultdict(list)
 	alldirsobjects=list()

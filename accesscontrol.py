@@ -14,8 +14,8 @@ def main():
 	# head={"X-Storage-User":"test:tester","X-Storage-Pass":"testing"}
 	head={"X-Storage-User":sys.argv[1],"X-Storage-Pass":sys.argv[2]}
 	r=requests.get(url,headers=head)
-	url12=sys.argv[3]
-	container = url12.split('/')[-1]
+	url12=r.headers['x-storage-url']
+	container = sys.argv[3]
 	auth="AUTH"
 	# print r.headers
 	tester=User(r.headers.get('x-auth-token'),r.headers.get('x-storage-token'))
@@ -26,11 +26,12 @@ def main():
 		print "Wrong username or password"
 		exit(1)
 	if auth in test:
+		# print "hi"
 		headers={"X-Container-Read":sys.argv[4],"X-Container-Write":sys.argv[4],"X-Auth-Token":tester.xauthtoken}
 		list1=sys.argv[1].split(":")
 		list2=sys.argv[4].split(":")
 		if list2[0]==list1[0]:
-			r=requests.put(url12,headers=headers)
+			r=requests.put(url12+'/'+sys.argv[3],headers=headers)
 			print "shared container",container,"with",sys.argv[4]
 
 

@@ -33,11 +33,11 @@ def main():
 
 		# print len(r.content)
 		file_name = url12.split('/')[-1]
-		if ".png" in file_name:
-			fh=open(file_name,'ab+')
+		# if ".png" in file_name:
+		fh=open(file_name,'wb+')
 	# fh=open(file_name,'rb')
-			fh.write(r.content)
-			fh.close()
+		fh.write(r.content)
+		fh.close()
 		print "Downloaded!"
 
 	else:
